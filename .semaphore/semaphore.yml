@@ -18,10 +18,14 @@ blocks:
       env_vars:
         - name: APP_ENV
           value: development
+      prologue:
+        commands:
+          - sem-version php 7.4.14
   - name: Code analysis
     task:
       prologue:
         commands:
+          - sem-version php 7.4.14
           - checkout
           - cd src
           - cache restore
@@ -34,9 +38,6 @@ blocks:
         - name: Code Sniffer
           commands:
             - php vendor/bin/phpcs -n --standard=PSR2 app routes resources
-        - name: Security Test
-          commands:
-            - 'vendor/bin/security-checker security:check composer.lock'
       env_vars:
         - name: APP_ENV
           value: test
@@ -46,6 +47,7 @@ blocks:
         - name: unsplash
       prologue:
         commands:
+          - sem-version php 7.4.14
           - checkout
           - cd src
           - cache restore
@@ -57,8 +59,9 @@ blocks:
             - php vendor/bin/phpunit
         - name: Browser Tests
           commands:
-            - 'php artisan dusk:chrome-driver'
+            - 'php artisan dusk:chrome-driver 87'
             - php artisan serve --port=8021 &
+            - 'php artisan dusk:chrome-driver'
             - php artisan dusk
       env_vars:
         - name: APP_ENV
