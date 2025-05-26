@@ -1,77 +1,46 @@
-<p align="right"><img src="https://tomfern.semaphoreci.com/badges/semaphore-demo-php-unsplash.svg" alt="Build Status"></p>
+# Ceramic Store Backend
 
-# Unsplash Image Gallery Demo
+This is a simple Flask backend for a ceramic store.
 
-This is a PHP Laravel image gallery demo that pulls images from the [Unsplash PHP API](https://github.com/unsplash/unsplash-php).
+## Setup
 
-## Prerequisites
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Obtain a API Key from Unsplash:
+2. Initialize the database:
+   ```bash
+   python database_setup.py
+   ```
 
-- Sign up to [Unsplash](https://unsplash.com)
-- Go to [Applications](https://unsplash.com/oauth/applications)
-- Create a **New Application**.
-- Accept the Terms.
-- Set a name for the application and copy the **Access Key** and the **Secret Key**.
+3. Run the application:
+   ```bash
+   python app.py
+   ```
 
-## Development Setup
+## API Endpoints
 
-- Fork the repository and clone it.
-- Install php and composer.
-- Install dependencies:
+- `GET /api/ceramics`: Returns a list of all ceramic items.
+- `GET /api/ceramics/<id>`: Returns a single ceramic item by its ID.
+- `GET /api/artists/featured`: Returns the featured artist.
 
-```
-$ cd src
-$ composer install
-```
+## Testing
 
-## Running Locally
+This project uses `pytest` for unit testing.
 
-- Create an env file for your Unsplash API:
+1.  **Install test dependencies**:
+    If you haven't already, ensure `pytest` is installed by running:
+    ```bash
+    pip install pytest
+    # Alternatively, if it's included in requirements.txt (which it should be for projects)
+    # pip install -r requirements.txt 
+    ```
+    (Note: `pytest` has been added to `requirements.txt` as part of this setup)
 
-```
-$ cp .env.example.unsplash .env-unsplash
-```
-
-- Edit the environment file and fill in your **Access Key** and **Secret Keys** obtained from your Unsplash account.
-- Prepare the environment:
-
-```
-$ export APP_ENV=development
-$ source .env-unsplash
-$ cp .env.example .env
-$ php artisan key:generate
-```
-
-- Start the development server on [http://127.0.0.1:8000](http://127.0.0.1:8000):
-
-```
-$ php artisan serve
-```
-
-![Gallery](./screenshots/gallery.png)
-
-## CI Pipeline
-
-We have a CI pipeline that:
-
-- Install dependencies.
-- Runs code analisys tests.
-- Runs integration and browser tests.
-
-![CI](./screenshots/ci.png)
-
-To run the CI Pipeline:
-
-- Sign up to [Semaphore](https://semaphoreci.com)
-- Add the project to Semaphore.
-- Add a secret called “unsplash” in Semaphore with the following variables:
-  - UNSPLASH_ACCESS_KEY = YOUR_UNSPLASH_ACCESS_ID
-  - UNSPLASH_SECRET_KEY = YOUR_UNSPLASH_SECRET_KEY
-![Secret](./screenshots/secret.png)
-- Make a commit, the CI pipeline should start automatically
-
-
-## License
-
-The project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2.  **Run tests**:
+    Navigate to the project root directory in your terminal and run:
+    ```bash
+    pytest
+    ```
+    This will automatically discover and run the tests in `test_app.py`.
